@@ -34,48 +34,6 @@
     cat docker-compose.yaml
   #+END_SRC
 
-  #+RESULTS: docker-compose.yaml
-  :RESULTS:
-  version: '3.1'
-  services:
-    seminar-es-master:
-      image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-      volumes:
-	- ./esdata_master:/usr/share/elasticsearch/data
-      environment:
-	- cluster.name=seminar-es
-	- node.name=master
-	- node.master=true
-	- discovery.zen.minimum_master_nodes=1
-	- discovery.seed_hosts=seminar-es-slave
-	- cluster.initial_master_nodes=master
-      ports:
-	- "9202:9200"
-
-    seminar-es-slave:
-      image: docker.elastic.co/elasticsearch/elasticsearch:7.5.0
-      volumes:
-	- ./esdata_slave:/usr/share/elasticsearch/data
-      environment:
-	- cluster.name=seminar-es
-	- node.name=slave
-	- node.master=false
-	- discovery.zen.minimum_master_nodes=1
-	- discovery.seed_hosts=seminar-es-master
-	- cluster.initial_master_nodes=master
-      ports:
-	- "9201:9200"
-
-    kibana:
-      links:
-	- "seminar-es-master:es"
-      image: docker.elastic.co/kibana/kibana:7.0.0
-      ports:
-	- "5602:5601"
-      environment:
-	ELASTICSEARCH_HOSTS: http://es:9200
-  :END:
-
 
   #+name: Run ES
   #+BEGIN_SRC sh :results value drawer
