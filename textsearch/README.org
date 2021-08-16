@@ -1,0 +1,16 @@
+#+TITLE: PG text search
+#+AUTHOR: M. Surmashev @muradbei
+
+* Problem
+  Text search
+
+* How
+  - btree
+  - tgrm
+  - gist
+
+* What to choose
+  - Abilities
+  - Creation time
+  - Index size
+  - Search speed
